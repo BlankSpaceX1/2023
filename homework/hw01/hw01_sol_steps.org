@@ -1,0 +1,34 @@
+#+TITLE: STAT 2255: Homework 01 solution steps
+
+1. Create and activate the virtual environment named `homework1` with python
+   3.10.0. 
+   #+begin_src shell
+conda create -n homework1 python=3.10.0
+conda activate homework1
+   #+end_src
+
+2. Install Jupyter notebook and update it to notebook 7.
+   #+begin_src shell
+conda install jupyter
+pip install jupyter notebook --upgrade
+   #+end_src
+
+3. Install the package `matplotlib` version `3.6.0`.
+   #+begin_src shell
+pip install matplotlib==3.6.0
+   #+end_src
+
+4. Start `jupyter notebook`.
+   #+begin_src shell
+jupyter notebook
+   #+end_src
+
+#+startup: show3levels hideblocks
+#+options: h:4 timestamp:nil date:nil tasks tex:t num:t toc:nil
+#+options: author:nil creator:nil html-postamble:nil HTML_DOCTYPE:HTML5
+#+EXPORT_FILE_NAME: homework1_sol
+#+HTML_HEAD: <base target="_blank">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://ossifragus.github.io/style/github-pandoc.css"/>
+#+LaTeX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [12pt, hidelinks]
+#+latex_header: \usepackage[margin=1in]{geometry}

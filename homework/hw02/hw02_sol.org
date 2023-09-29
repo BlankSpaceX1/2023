@@ -1,0 +1,375 @@
+#+TITLE: STAT 2255: Homework 02
+
+* Problem 1
+  :PROPERTIES:
+:CUSTOM_ID: problem-1
+:header-args: :exports none
+:END:
+
+** (a) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: a-5-pts
+:END:
+Create a list that contains all the integers between 501 to 600 that are
+divisible by 5.
+
+#+begin_src python :results output :exports both
+[i for i in range(501, 601) if i % 5 == 0]
+#+end_src
+
+** (b) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: b-5-pts
+:END:
+Create a list that contains all the odd integers between 501 to 600 that
+are divisible by 3.
+
+#+begin_src python :results output :exports both
+[i for i in range(501, 601) if i % 3 == 0 and i % 2 != 0]
+#+end_src
+
+** (c) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: c-5-pts
+:END:
+Create a list that contains all the integers between 501 to 600 that are
+divisible by both 6 and 9.
+
+#+begin_src python :results output :exports both
+[i for i in range(501, 601) if i % 6 == 0 and i % 9 == 0]
+#+end_src
+
+* Problem 2
+  :PROPERTIES:
+:CUSTOM_ID: problem-2
+:END:
+Define 2 lists such that
+
+#+begin_src python :exports code
+L1 = list(range(1, 101))
+L2 = [2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6]
+#+end_src
+
+** (a) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: a-5-pts
+:END:
+Using list index to get all the even number from L1 in decreasing order.
+
+#+begin_src python :results output :exports both
+L1[::-2]
+#+end_src
+
+** (b) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: b-5-pts
+:END:
+Use dictionary to generate a frequency table of *L2*. Each number as the
+key and its corresponding frequency as the value, i.g. {3:2} means
+number 3 appears 2 times.
+
+#+begin_src python :results output :exports both
+D = {}
+for i in L2:
+    if i in D.keys():
+        D[i] += 1
+    else:
+        D[i] = 1
+D
+#+end_src
+
+** (c) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: c-5-pts
+:END:
+If randomly select a number from L2, what is the probability that the
+number is even? Use a simulation to approximate the probability and
+compare it with the theoretical value.
+
+For simulation, you can use the =sample= function from =random= to
+simulate the task of randomly select a number from =L2=, e.g. use
+
+#+begin_src python :exports code
+import random
+random.seed(2255)
+#+end_src
+
+to import the =random= and fixed the random seed. Then
+
+#+begin_src python :exports code
+random.sample(L2, 1)[0]
+#+end_src
+
+gives you a randomly selected number from =L2=.
+
+#+begin_src python
+import random
+random.seed(2255)
+# Do not remove the above two lines. Put your code below
+
+#+end_src
+
+#+begin_src python :results output :exports both
+K = 100
+even = 0
+for i in range(K):
+    d = random.sample(L2, 1)[0]
+    if (d%2 == 0):
+        even += 1
+even / K
+#+end_src
+
+** (d) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: d-5-pts
+:END:
+Use list compression to create a list that contains the keys with
+highest frequency from the dictionary in part (b)
+
+#+begin_src python :results output :exports both
+highest_frequency = max(D.values())
+[k for k, value in D.items() if value == highest_frequency]
+#+end_src
+
+* Problem 3
+  :PROPERTIES:
+:CUSTOM_ID: problem-3
+:END:
+Data sets are frequently provided as a CSV file. We want to "open" that
+file in our script and put the data in a Python list. The function
+=open()= gives you a file object. *Make sure that you download the
+data.csv file to the same folder of the hw02.ypvnb file*.
+
+#+begin_src python :results output :exports both
+f = open('data.csv')
+#+end_src
+
+There are all sorts of methods you can give to files.
+
+- =f.close()= - Closes the file. Just like *File -> Save*.
+- =f.read()= - Reads the contents of the file. You can assign the result
+  to a variable.
+- =f.readline()= - Reads just one line of a text file.
+- =f.write(stuff)= - Writes stuff to the file.
+
+These are the important methods you need to know for now. Some of them
+take parameters, but we don't really care about that.
+
+** (a) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: a-5-pts
+:END:
+Open the *data.csv* file, read the contents, and assign it to a variable
+called *contents*. Type *contents* to see what is the output.
+
+#+begin_src python :results output :exports both
+f = open('data.csv')
+contents = f.read()
+contents
+#+end_src
+
+What is the type of the variable?
+
+#+begin_src python :results output :exports both
+type(contents)
+#+end_src
+
+** (b) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: b-5-pts
+:END:
+In a string, an escape character is a character that takes on an
+alternative meaning in a string. Many programming languages use the ⧵
+(backslash) as an escape character. For example, *⧵n* indicates new line
+(white spaces until next line), *⧵t* means tab, and so on.
+
+As we discussed in the lecture, we can apply the =.split()= function to
+*str* typed object to split a string into a list of strings after
+breaking the given string by the specified delimiter. If the delimiter
+is not provided, any white space is a separator. Use the =.split()=
+method and print the returned list.
+
+#+begin_src python :results output :exports both
+clist = contents.split()
+clist
+#+end_src
+
+** (c) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: c-5-pts
+:END:
+We've imported the CSV file into Python as a list, but the values are
+strings, not floats. We can coerce a variable to a specific type (not
+always). For example, =fake_pi = '3.141592'= is a string, but it can be
+coerced to a float by running =real_pi = float(fake_pi)= . Use the
+=float()= function in a list comprehension to coerce all elements to
+floats.
+
+#+begin_src python :results output :exports both
+[float(item) for item in clist]
+#+end_src
+
+* Problem 4
+  :PROPERTIES:
+:CUSTOM_ID: problem-4
+:END:
+Create the following lists that you will use for testing your functions:
+
+#+begin_src python :results output :exports both
+L1 = [2, 2, 5, 5]
+L2 = [2, 2, 5, 6, 9]
+L3 = [1, 2, 2, 3]
+L4 = [1, 3, 3, 4, 4, 5, 5]
+L5 = [1, 3, 3, 4, 4, 5, 5]
+#+end_src
+
+#+begin_src python :results output :exports both
+L1 = [2, 2, 5, 5]
+L2 = [2, 2, 5, 6, 9]
+L3 = [1, 2, 2, 3]
+L4 = [1, 3, 3, 4, 4, 5, 5]
+L5 = [1, 3, 3, 4, 4, 5, 5]
+L = [L1, L2, L3, L4, L5]
+#+end_src
+
+** (a) 15 pts
+   :PROPERTIES:
+:CUSTOM_ID: a-15-pts
+:END:
+Create a function called *FizzBuzz* that takes 3 arguments n, a, b as
+input. The function should satisfy the followings:
+
+- Set the default values for a = 3 and b = 5.
+- If n is divisible by a, return string "Fizz".
+- If n is divisible by b, return string "Buzz".
+- If n is divisible by both a and b, return string "FizzBuzz".
+- If none of the above is true, return n.
+
+Verify your function using values of n from 1 to 50.
+
+#+begin_src python :results output :exports both
+def FizzBuzz(n, a=3, b=5):
+    if n % a == 0:
+        if n % b == 0:
+            return "FizzBuzz"
+        else:
+            return "Fizz"
+    elif n % b == 0:
+        return "Buzz"
+    else:
+        return  n
+
+for i in range(1, 50):
+    print(FizzBuzz(i))
+#+end_src
+
+** (b) 5 pts
+   :PROPERTIES:
+:CUSTOM_ID: b-5-pts
+:END:
+Write a function called =my_mean= that takes a list of numbers as input
+and return their mean (Do not import any module). Test it with =L1-L5=.
+
+#+begin_src python :results output :exports both
+def my_mean(x):
+    s = 0
+    for i in x:
+        s += i
+    return s
+
+for i in range(1, len(L)):
+    print("The result for L" + str(i) + " is:", my_mean(L[i-1]))
+#+end_src
+
+** (c) 10 pts
+   :PROPERTIES:
+:CUSTOM_ID: c-10-pts
+:END:
+Write a function called =my_median= that takes a list of numbers as
+input and return their median (Do not import any module). Test it with
+=L1-L5=.
+
+#+begin_src python :results output :exports both
+def my_median(x):
+    l = len(x)
+    idx = l // 2
+    if l % 2 ==0:
+        return (x[idx] + x[idx-1]) / 2 
+    else:
+        return x[idx]
+
+for i in range(1, len(L)):
+    print("The result for L" + str(i) + " is:", my_median(L[i-1]))
+#+end_src
+
+** (d) 10 pts
+   :PROPERTIES:
+:CUSTOM_ID: d-10-pts
+:END:
+Write a function called =my_mode= that takes a list of numbers as input
+and return their mode. In the case of multiple modes, return the
+smallest among them (Do not import any module). Test it with =L1-L5=.
+
+#+begin_src python :results output :exports both
+def my_mode(x):
+    if len(x) == 0:
+        return None
+    D = {}
+    for i in x:
+        if i in D:
+            D[i] += 1
+        else:
+            D[i] = 1
+    m = max(D.values())
+    modes = [i for i, f in D.items() if f == m]
+    return min(modes)
+
+for i in range(1, len(L)):
+    print("The result for L" + str(i) + " is:", my_mode(L[i-1]))
+#+end_src
+
+** (e) 10 pts
+   :PROPERTIES:
+:CUSTOM_ID: e-10-pts
+:END:
+Use the functions in the previous part, write a function called
+=my_stat= that takes a list of numbers as input and return a dictionary
+with key:value pairs corresponding to the mean, median, mode of the
+input list (Do not import any module). Test it with =L1-L5=.
+
+#+begin_src python :results output :exports both
+def my_stat(x):
+    D = {}
+    D['mean'] = my_mean(x)
+    D['median'] = my_median(x)
+    D['mode'] = my_mode(x)
+    return D
+
+for i in range(1, len(L)):
+    print("The result for L" + str(i) + " is:", my_stat(L[i-1]))
+#+end_src
+
+
+* Setup :noexport:
+
+#+startup: show2levels !hideblocks
+#+options: h:4 timestamp:nil date:nil tasks tex:t num:3 toc:nil
+#+options: author:nil creator:nil html-postamble:nil HTML_DOCTYPE:HTML5
+# #+EXPORT_FILE_NAME: 
+#+HTML_HEAD: <base target="_blank">
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://ossifragus.github.io/style/github-pandoc.css"/>
+#+LaTeX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [12pt, hidelinks]
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+PROPERTY: header-args  :exports none
+
+
+
+
+
+# C-c C-v b or C-c C-v C-b org-babel-execute-buffer
+# It is bound to C-c C-v k.
+
+# (org-babel-remove-result-one-or-many X)
+
+# Remove the result of the current source block. If called with a prefix argument, remove all result blocks in the buffer.
